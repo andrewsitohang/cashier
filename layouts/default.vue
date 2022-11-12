@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="sideDrawer" fixed app>
+    <v-navigation-drawer disable-resize-watcher v-model="sideDrawer" fixed app>
       <v-list>
         <v-list-item v-for="(item, i) in sideMenu" :key="i" :to="item.to" router exact>
           <v-list-item-action>
@@ -13,7 +13,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-main>
-      <v-container fluid>
+      <v-container fill-height fluid>
         <Nuxt />
       </v-container>
     </v-main>
@@ -54,6 +54,24 @@ export default {
         }
       ],
     }
+  },
+  methods: {
+    isWelcomeScreen() {
+      if (!localStorage.WelcomeScreen) {
+        if (this.$router.currentRoute.path != '/register' && this.$router.currentRoute.path != '/login') {
+          this.$router.push('/login')
+        }
+      }
+    }
+  },
+  watch: {
+    $route() {
+      this.isWelcomeScreen()
+    }
+  },
+  mounted() {
+    // localStorage.setItem('WelcomeScreen', true)
+    this.isWelcomeScreen()
   }
 }
 </script>
