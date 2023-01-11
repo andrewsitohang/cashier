@@ -29,22 +29,50 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'DefaultLayout',
   data() {
     return {
       sideDrawer: false,
-      sideMenu: [
+      sideMenu: [],
+      originalSideMenu: [
         {
-          icon: 'mdi-account',
-          title: 'Account',
-          to: '/account'
+          icon: 'mdi-view-dashboard-variant',
+          title: 'Dashboard',
+          to: '/dashboard',
+          middleware: ['authenticated']
         },
         {
-          icon: 'mdi-bell',
-          title: 'Notification',
-          to: '/notification'
-        }
+          icon: 'mdi-application',
+          title: 'Cashier App',
+          to: '/',
+          middleware: ['admin', 'cashier']
+        },
+        {
+          icon: 'mdi-fingerprint',
+          title: 'Absence',
+          to: '/absence',
+          middleware: ['authenticated']
+        },
+        {
+          icon: 'mdi-account',
+          title: 'User Management',
+          to: '/users',
+          middleware: ['admin']
+        },
+        {
+          icon: 'mdi-login',
+          title: 'Login',
+          to: '/login',
+          middleware: ['unauthenticated']
+        },
+        {
+          icon: 'mdi-logout',
+          title: 'Logout',
+          to: '/logout',
+          middleware: ['authenticated']
+        },
       ],
       bottomMenu: [
         {
@@ -55,6 +83,12 @@ export default {
       ],
     }
   },
+  computed: {
+    ...mapGetters('auth', {
+      authenticated: 'authenticated',
+      user: 'user',
+    })
+  },
   methods: {
     isWelcomeScreen() {
       if (!localStorage.WelcomeScreen) {
@@ -62,16 +96,32 @@ export default {
           this.$router.push('/login')
         }
       }
+    },
+    filterSideMenu() {
+      this.sideMenu = this.originalSideMenu.filter(item => {
+        if (item.middleware.includes(this.user.role)) {
+          return true
+        }
+        if (this.authenticated) {
+          return item.middleware.includes('authenticated')
+        } else {
+          return item.middleware.includes('unauthenticated')
+        }
+      })
     }
   },
   watch: {
     $route() {
       this.isWelcomeScreen()
-    }
+    },
+    authenticated() {
+      this.filterSideMenu()
+    },
   },
   mounted() {
     // localStorage.setItem('WelcomeScreen', true)
     this.isWelcomeScreen()
+    this.filterSideMenu()
   }
 }
 </script>
