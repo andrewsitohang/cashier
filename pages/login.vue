@@ -12,7 +12,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn @click="onSubmit" color="primary">Login</v-btn>
+                    <v-btn @click="onSubmit" color="primary" :loading="isDisable">Login</v-btn>
                 </v-card-actions>
             </v-card>
             <p>Kamu belum punya akun ?<v-btn href="/register" plain>register</v-btn>
