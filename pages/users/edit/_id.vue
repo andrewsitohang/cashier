@@ -19,13 +19,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn @click="onSubmit" color="primary" :disable="isDisable">
-                        <span v-if="!isDisable">
-                            Update
-                        </span>
-                        <v-progress-circular v-else color="primary" indeterminate>
-                        </v-progress-circular>
-                    </v-btn>
+                    <v-btn @click="onSubmit" color="primary" :loading="isDisable">Update</v-btn>
                 </v-card-actions>
             </v-card>
         </v-col>
@@ -34,6 +28,9 @@
 
 <script>
 export default ({
+    head: {
+        title: 'Edit User'
+    },
     middleware: ['authenticated'],
     async asyncData({ params }) {
         return {

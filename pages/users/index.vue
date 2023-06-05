@@ -48,6 +48,9 @@
 
 <script>
 export default {
+    head: {
+        title: 'Users'
+    },
     middleware: ['authenticated'],
     data() {
         return {

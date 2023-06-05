@@ -17,13 +17,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn @click="onSubmit" color="primary" :disable="isDisable">
-                        <span v-if="!isDisable">
-                            Register
-                        </span>
-                        <v-progress-circular v-else color="primary" indeterminate>
-                        </v-progress-circular>
-                    </v-btn>
+                    <v-btn @click="onSubmit" color="primary" :loading="isDisable">Register</v-btn>
                 </v-card-actions>
             </v-card>
             <p>Kamu sudah punya akun ?<v-btn href="/login" plain>login</v-btn>
@@ -34,6 +28,9 @@
 
 <script>
 export default ({
+    head: {
+        title: 'Register'
+    },
     middleware: ['unauthenticated'],
     data() {
         return {

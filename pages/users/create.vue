@@ -19,13 +19,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn @click="onSubmit" color="primary" :disable="isDisable">
-                        <span v-if="!isDisable">
-                            Save
-                        </span>
-                        <v-progress-circular v-else color="primary" indeterminate>
-                        </v-progress-circular>
-                    </v-btn>
+                    <v-btn @click="onSubmit" color="primary" :loading="isDisable">Save</v-btn>
                 </v-card-actions>
             </v-card>
         </v-col>
@@ -34,6 +28,9 @@
 
 <script>
 export default ({
+    head: {
+        title: 'Create User'
+    },
     middleware: ['authenticated'],
     data() {
         return {

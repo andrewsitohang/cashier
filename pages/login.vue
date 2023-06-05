@@ -24,6 +24,9 @@
 <script>
 import { mapMutations } from 'vuex'
 export default ({
+    head: {
+        title: 'Login'
+    },
     middleware: ['unauthenticated'],
     data() {
         return {
